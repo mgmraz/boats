@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+
 //===========================================================================
 public class boats implements Serializable {
 //----------------------------------------------------------------------------
@@ -8,30 +9,20 @@ public class boats implements Serializable {
     private int year;
     private String model;
     private double length;
-    private double purchasePrice;
-    private double maintenancePrice;
+    private static double purchasePrice;
+    private static double maintenancePrice;
     private static ArrayList<boats> boatList=new ArrayList<>();
+
 //----------------------------------------------------------------------------
-    public boats(String s, String s1, int i, String s2, double v, double parseDouble, int i1) {
+    public boats(String name, String model, int year, double length, double purchasePrice, double maintenancePrice) {
 
-    name = "";
-    year = 0;
-    model = "";
-    length = 0;
-    purchasePrice = 0;
-    maintenancePrice = 0;
-
-    }
-//----------------------------------------------------------------------------
-    public boats(String name, int year, String model, double length, double purchasePrice, double maintenancePrice) {
-
-    this();
+    super();
     this.name = name;
     this.year = year;
     this.model = model;
-    this.length = year;
-    this.purchasePrice = purchasePrice;
-    this.maintenancePrice = maintenancePrice;
+    this.length = length;
+    boats.purchasePrice = purchasePrice;
+    boats.maintenancePrice = maintenancePrice;
 }
 //----------------------------------------------------------------------------
     public void setName() {
@@ -44,7 +35,7 @@ public class boats implements Serializable {
     return(name);
     }
 //----------------------------------------------------------------------------
-    public void setYear() {
+    public void setYear(int year) {
 
     this.year = year;
     }
@@ -54,7 +45,7 @@ public class boats implements Serializable {
     return(year);
     }
 //----------------------------------------------------------------------------
-    public void setModel() {
+    public void setModel(String model) {
 
     this.model = model;
     }
@@ -64,7 +55,7 @@ public class boats implements Serializable {
     return(model);
     }
 //----------------------------------------------------------------------------
-    public void setLength() {
+    public void setLength(double length) {
 
     this.length = length;
         }
@@ -74,29 +65,29 @@ public class boats implements Serializable {
     return(length);
     }
 //----------------------------------------------------------------------------
-    public void setPurchasePrice() {
+    public void setPurchasePrice(double purchasePrice) {
 
-    this.purchasePrice = purchasePrice;
+    boats.purchasePrice = purchasePrice;
     }
 //----------------------------------------------------------------------------
-    public double getPurchasePrice(){
+    public static double getPurchasePrice(){
 
     return(purchasePrice);
     }
 //----------------------------------------------------------------------------
-    public void setMaintenancePrice() {
+    public void setMaintenancePrice(double maintenancePrice) {
 
-    this.maintenancePrice = maintenancePrice;
+    boats.maintenancePrice = maintenancePrice;
     }
 //----------------------------------------------------------------------------
-    public double getMaintenancePrice(){
+    public static double getMaintenancePrice(){
 
     return(maintenancePrice);
     }
 //----------------------------------------------------------------------------
-    public static void setBoatList(ArrayList<boats> boatss) {
+    public static void setBoatList(ArrayList<boats> shipList) {
 
-     boatList = boatss;
+     boatList = shipList;
 
     }
 //----------------------------------------------------------------------------
@@ -107,10 +98,33 @@ public class boats implements Serializable {
 //----------------------------------------------------------------------------
     public String toString() {
 
-     return(String.format("%s $%.2f",name,year,model,length,purchasePrice,maintenancePrice));
+    return (name + year + model + length + purchasePrice + maintenancePrice);
  }
 //----------------------------------------------------------------------------
+    public static double getPaidTotal() {
 
+    double paid = 0;
+    paid += boats.getPurchasePrice();
+    return paid;
+    }
+//----------------------------------------------------------------------------
+    public static double getSpentTotal() {
+
+    double spent = 0;
+    spent += boats.getMaintenancePrice();
+    return spent;
+    }
+//----------------------------------------------------------------------------
+    public boolean checkExpense(double money) {
+
+
+    if (getPurchasePrice() < money)
+    {
+        System.out.println("Expense not permitted, only "+(getPurchasePrice()-getMaintenancePrice()) + " left to spend.");
+        return false;
+    }
+    return true;
+}
 //----------------------------------------------------------------------------
 ////////////////
 }
